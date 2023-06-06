@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -40,11 +41,9 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         $data = $request->validated();
-        $project = new Project();
-        $project->fill($data);
-        $project->save();
-
-        return redirect()->route('admin.projects.index');
+        $data['slug'] = Str::slug($data['title'], '_');
+        $project = Project::create($data);
+        return redirect()->route('admin.projects.index')->with('message', "$project->title è stato creato con successo");
     }
 
     /**
@@ -64,9 +63,8 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Project $project)
     {
-        $project = Project::findOrFail($id);
         return view('admin.projects.edit', compact('project'));
     }
 
@@ -77,12 +75,12 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProjectRequest $request, $id)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
         $data = $request->validated();
-        $project = Project::findOrFail($id);
+        $data['slug'] = Str::slug($data['title'], '_');
         $project->update($data);
-        return redirect()->route('admin.projects.index');
+        return redirect()->route('admin.projects.index')->with('message', "$project->title è stato modificato con successo");
     }
 
     /**
@@ -91,10 +89,9 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        $project = Project::findOrFail($id);
         $project->delete();
-        return redirect()->route('admin.projects.index');
+        return redirect()->route('admin.projects.index')->with('message', "$project->title è stato cancellato con successo");
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateProjectRequest extends FormRequest
 {
@@ -24,8 +25,7 @@ class UpdateProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|regex:/^[^\s]+$/',
+            'title' => ['required','string','max:255', Rule::unique('projects')->ignore($this->project)],
             'description' => 'required|string|max:255',
         ];
     }
@@ -36,9 +36,6 @@ class UpdateProjectRequest extends FormRequest
             'title.required' => 'Il campo titolo è obbligatorio',
             'title.string' => 'Il titolo deve essere un testo',
             'title.max' => 'Il titolo può essere massimo 255 caratteri',
-            'slug.required' => 'Il campo slug è obbligatorio',
-            'slug.string' => 'Il campo slug deve essere un testo',
-            'slug.regex' => 'Il campo slug deve essere uguale al campo titolo ma con _ al posto degli spazi',
             'description.required' => 'Il campo descrizione è obbligatorio',
             'description.string' => 'La descrizione deve essere un testo',
             'description.max' => 'La descrizione può essere massimo 255 caratteri',
