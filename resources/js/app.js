@@ -34,6 +34,7 @@ if (buttons.length > 0) {
 
 document.addEventListener("DOMContentLoaded", function() {
     const confirmMessage = document.getElementById("ms_message")
+    console.log(confirmMessage);
     if (confirmMessage) {
         setTimeout(function() {
             confirmMessage.classList.add("d-none")
