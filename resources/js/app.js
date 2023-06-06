@@ -1,6 +1,7 @@
 import './bootstrap';
 import '~resources/scss/app.scss';
 import * as bootstrap from 'bootstrap';
+import { functions } from 'lodash';
 import.meta.glob([
     '../img/**'
 ])
@@ -30,3 +31,12 @@ if (buttons.length > 0) {
         });
     });
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const confirmMessage = document.getElementById("ms_message")
+    if (confirmMessage) {
+        setTimeout(function() {
+            confirmMessage.classList.add("d-none")
+        }, 5000);
+    }
+})
