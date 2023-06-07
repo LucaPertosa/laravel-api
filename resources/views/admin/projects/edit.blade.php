@@ -19,6 +19,21 @@
         </div>
 
         <div class="mb-3">
+            <label for="type" class="form-label">Titolo</label>
+            <select class="form-select" name="type_id" id="type">
+                <option value=""></option>
+                @foreach ($types as $type)
+                    <option @selected($type->id == old('type_id', $project->type?->id)) value="{{$type->id}}">{{ $type->name }}</option>
+                @endforeach
+            </select>
+            @error('title')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
             <label for="description" class="form-label">Descrizione</label>
             <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" rows="3">{{old('description', $project->description)}}</textarea>
             @error('description')
