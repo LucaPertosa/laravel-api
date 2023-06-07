@@ -27,6 +27,7 @@ class UpdateProjectRequest extends FormRequest
         return [
             'title' => ['required','string','max:255', Rule::unique('projects')->ignore($this->project)],
             'description' => 'required|string|max:255',
+            'types_id' => ['nullable', 'exists:categories,id'],
         ];
     }
 
@@ -39,6 +40,7 @@ class UpdateProjectRequest extends FormRequest
             'description.required' => 'Il campo descrizione è obbligatorio',
             'description.string' => 'La descrizione deve essere un testo',
             'description.max' => 'La descrizione può essere massimo 255 caratteri',
+            'types_id.exists' => 'Il tipo di progetto non esiste',
         ];
     }
 }

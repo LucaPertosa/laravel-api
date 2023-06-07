@@ -27,6 +27,7 @@ class StoreProjectRequest extends FormRequest
         return [
             'title' => ['required','string','max:255', Rule::unique('projects')],
             'description' => 'required|string|max:255',
+            'types_id' => ['nullable', 'exists:types,id']
         ];
     }
 
@@ -40,6 +41,7 @@ class StoreProjectRequest extends FormRequest
             'description.required' => 'Il campo descrizione è obbligatorio',
             'description.string' => 'La descrizione deve essere un testo',
             'description.max' => 'La descrizione può essere massimo 255 caratteri',
+            'types_id.exists' => 'Il tipo di progetto non esiste',
         ];
     }
 }
