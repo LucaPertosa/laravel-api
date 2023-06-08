@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="text-end">
-        <a class="btn btn-primary" href="{{route('admin.projects.index')}}">Torna alla lista dei progetti</a>
+        <a class="btn btn-primary" href="{{ url()->previous() }}">Torna alla lista dei progetti</a>
     </div>
     <h1 class="text-center mt-3">{{ $project->title }}</h1>
     <div class="d-md-flex justify-content-between">
