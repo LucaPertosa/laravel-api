@@ -33,6 +33,21 @@
             @enderror
         </div>
 
+        <label class="form-label">Tecnologia</label>
+        <div class="mb-3 border rounded row px-3 mx-0">
+            @foreach ($technologies as $technology)
+            <div class="form-check col-md-4 my-3">
+                <label for="{{$technology->name}}" class="form-check-label">{{ $technology->name }}</label>
+                <input type="checkbox"  class="form-check-input @error('technology_id') is-invalid @enderror" name="technology_id[]" id="{{$technology->name}}" value="{{$technology->id}}">
+            </div>
+            @endforeach        
+        </div>
+        @error('technology_id')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+
         <div class="mb-3">
             <label for="description" class="form-label">Descrizione</label>
             <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" rows="3">{{old('description', $project->description)}}</textarea>
