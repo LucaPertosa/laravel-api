@@ -4,7 +4,16 @@
     <div class="mb-4">
         <a class="btn btn-primary" href="{{ url()->previous() }}">Torna indietro</a>
     </div>
-    <h1 class="text-center mt-3">{{ $project->title }}</h1>
+    <h1 class="text-center mt-3">
+        {{ $project->title }}
+    </h1>
+    <h6 class="text-center">
+        @forelse ($project->technologies as $tech)
+            <span class="badge text-bg-info">{{ $tech->name }}</span>
+        @empty
+            <span class="badge text-bg-info">Nessuna technologia selezionata</span>
+        @endforelse
+    </h6>
     <div class="d-md-flex justify-content-between">
         @if ($project->type)
             <h6 class="text-muted">{{ $project->type->name }}</h6>
