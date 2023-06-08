@@ -13,5 +13,16 @@
         @endif
         <h6 class="text-md-end text-muted">{{ $type->slug }}</h6>
     </div>
-    <p class="text-center mt-4">{{ $type->description }}</p>
+
+    <ul>
+        @forelse ($type->projects as $project)
+            <li>
+                <a href="{{ route('admin.projects.show', $project->slug) }}">
+                    {{ $project->title }}
+                </a>
+            </li>
+        @empty
+            <li>Nessun progetto collegato a questa tipologia</li>
+        @endforelse
+    </ul>
 @endsection
