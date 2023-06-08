@@ -14,6 +14,12 @@ class Project extends Model
     // crea relazione con tabella type
     public function type()
     {
-		return $this->belongsTo(Type::class);
-	}
+        return $this->belongsTo(Type::class);
+    }
+
+    public function technologies()
+    {
+        return $this->belongsToMany(Technology::class);
+    } 
+
 }
