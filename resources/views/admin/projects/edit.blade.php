@@ -38,15 +38,15 @@
             @foreach ($technologies as $technology)
             <div class="form-check col-md-4 my-3">
                 <label for="{{$technology->name}}" class="form-check-label">{{ $technology->name }}</label>
-                <input type="checkbox"  class="form-check-input @error('technology_id') is-invalid @enderror" name="technology_id[]" id="{{$technology->name}}" value="{{$technology->id}}">
+                <input type="checkbox" @checked(old('technology_id') ? in_array($technology->id, old('technology_id', [])) : $project->technologies->contains($technology)) class="form-check-input @error('technology_id') is-invalid @enderror" name="technology_id[]" id="{{$technology->name}}" value="{{$technology->id}}">
+                @error('technology_id')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             @endforeach        
         </div>
-        @error('technology_id')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-        @enderror
 
         <div class="mb-3">
             <label for="description" class="form-label">Descrizione</label>

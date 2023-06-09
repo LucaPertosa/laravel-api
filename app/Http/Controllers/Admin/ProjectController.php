@@ -48,7 +48,9 @@ class ProjectController extends Controller
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title'], '_');
         $project = Project::create($data);
-        $project->technologies()->attach($data['technology_id']);
+        if (array_key_exists('technology_id', $data)) {
+            $project->technologies()->attach($data['technology_id']);
+        }
         return redirect()->route('admin.projects.index')->with('message', "$project->title è stato creato con successo");
     }
 
@@ -88,7 +90,11 @@ class ProjectController extends Controller
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title'], '_');
         $project->update($data);
-        $project->technologies()->attach($data['technology_id']);
+        if (array_key_exists('technology_id', $data)) {
+            $project->technologies()->sync($data['technology_id']);
+        } else {
+            $project->technologies()->detach();
+        }
         return redirect()->route('admin.projects.index')->with('message', "$project->title è stato modificato con successo");
     }
 
@@ -101,6 +107,7 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
+        $project->technologies()->detach();
         return redirect()->route('admin.projects.index')->with('message', "$project->title è stato cancellato con successo");
     }
 }

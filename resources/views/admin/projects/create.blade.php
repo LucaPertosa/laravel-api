@@ -36,7 +36,9 @@
             @foreach ($technologies as $technology)
             <div class="form-check col-md-4 my-3">
                 <label for="{{$technology->name}}" class="form-check-label">{{ $technology->name }}</label>
-                <input type="checkbox"  class="form-check-input @error('technology_id') is-invalid @enderror" name="technology_id[]" id="{{$technology->name}}" value="{{$technology->id}}">
+                <input type="checkbox" 
+                @checked(in_array($technology->id, old('technology_id', []))) 
+                class="form-check-input @error('technology_id') is-invalid @enderror" name="technology_id[]" id="{{$technology->name}}" value="{{$technology->id}}">
             </div>
             @endforeach        
         </div>
