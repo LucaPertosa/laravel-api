@@ -5,18 +5,13 @@
         <a class="btn btn-primary" href="{{ url()->previous() }}">Torna indietro</a>
     </div>
     <h1 class="text-center mt-3">{{ $type->name }}</h1>
-    <div class="d-md-flex justify-content-between">
-        @if ($type)
-            <h6 class="text-muted">{{ $type->name }}</h6>
-        @else
-            <h6 class="text-muted">Nessuna tipologia assegnata</h6>
-        @endif
-        <h6 class="text-md-end text-muted">{{ $type->slug }}</h6>
-    </div>
-
+    
+    <h6 class="text-md-end text-muted">{{ $type->slug }}</h6>
+    
+    <h3 class="mb-3">Progetti collegati a questa tipologia di programmazione:</h3>
     <ul>
         @forelse ($type->projects as $project)
-            <li>
+            <li class="mb-3">
                 <a href="{{ route('admin.projects.show', $project->slug) }}">
                     {{ $project->title }}
                 </a>

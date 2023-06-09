@@ -64,19 +64,19 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.projects.index' ? 'bg-secondary' : '' }}"
+                                <a class="nav-link text-white {{ str_contains(Route::currentRouteName(), 'admin.projects' ) ? 'bg-secondary' : '' }}"
                                     href="{{ route('admin.projects.index') }}">
                                     <i class="fa-solid fa-sheet-plastic fa-lg fa-fw"></i> Progetti
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.types.index' ? 'bg-secondary' : '' }}"
+                                <a class="nav-link text-white {{ str_contains(Route::currentRouteName(), 'admin.types' )? 'bg-secondary' : '' }}"
                                     href="{{ route('admin.types.index') }}">
                                     <i class="fa-solid fa-list-check fa-lg fa-fw"></i> Tipologie
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.technologies.index' ? 'bg-secondary' : '' }}"
+                                <a class="nav-link text-white {{ str_contains(Route::currentRouteName(),'admin.technologies') ? 'bg-secondary' : '' }}"
                                     href="{{ route('admin.technologies.index') }}">
                                     <i class="fa-solid fa-microchip fa-lg fa-fw"></i> Tecnologie
                                 </a>
