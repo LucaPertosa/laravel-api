@@ -32,9 +32,17 @@ class ProjectController extends Controller
             });
         };
 
+        // gesione nome visualizzato del filtro non trovato
+        if (!is_null($data['technology_id'])) {
+            $selected_tech = Technology::find($data['technology_id'])->name;
+        } else {
+            $selected_tech = [];
+        }
+
         $projects = $projects->get();
 
-        return view('admin.projects.index', compact('projects', 'types', 'technologies'));
+
+        return view('admin.projects.index', compact('projects', 'types', 'technologies', 'selected_tech'));
     }
 
     /**
