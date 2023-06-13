@@ -4,7 +4,7 @@
 
     <a href="{{ route('admin.projects.index') }}" class="btn btn-success my-3">Torna alla lista</a>
     
-    <form action="{{ route('admin.projects.store') }}" method="POST">
+    <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label for="title" class="form-label">Titolo</label>
@@ -47,6 +47,15 @@
                 {{ $message }}
             </div>
         @enderror
+
+        <div class="mb-3">
+            <label for="image-input" class="form-label">Immagine</label>
+            <input type="file" class="form-control" id="image-input" name="image">
+            <div class="my-3 d-none" id="preview-container">
+                <p>Anteprima immagine:</p>
+                <img class="d-none w-25" id="image-preview" src="" alt="">
+            </div>
+        </div>
 
         <div class="mb-3">
             <label for="description" class="form-label">Descrizione</label>

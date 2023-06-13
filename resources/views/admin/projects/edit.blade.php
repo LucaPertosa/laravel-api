@@ -5,7 +5,7 @@
 
     <a href="{{ route('admin.projects.index') }}" class="btn btn-success my-3">Torna alla lista</a>
     
-    <form action="{{ route('admin.projects.update', $project->slug) }}" method="POST">
+    <form action="{{ route('admin.projects.update', $project->slug) }}" method="POST" enctype="multipart/form-data">
         @method('PUT')
         @csrf
         <div class="mb-3">
@@ -19,7 +19,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="type" class="form-label">Titolo</label>
+            <label for="type" class="form-label">Tipologia</label>
             <select class="form-select @error('type_id') is-invalid @enderror" name="type_id" id="type">
                 <option value=""></option>
                 @foreach ($types as $type)
@@ -46,6 +46,15 @@
                 @enderror
             </div>
             @endforeach        
+        </div>
+        
+        <div class="mb-3">
+            <label for="image-input" class="form-label">Immagine</label>
+            <input type="file" class="form-control" id="image-input" name="image">
+            <div class="my-3 d-none" id="preview-container">
+                <p>Anteprima immagine:</p>
+                <img class="d-none w-25" id="image-preview" src="" alt="">
+            </div>
         </div>
 
         <div class="mb-3">

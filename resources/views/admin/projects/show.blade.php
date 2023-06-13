@@ -7,6 +7,14 @@
     <h1 class="text-center mt-3">
         {{ $project->title }}
     </h1>
+    
+    {{-- aggiungo la visualizzazione dell'immagine solo se presente --}}
+    @if ($project->image)
+        <div class="mb-4 d-flex justify-content-center">
+            <img class="img-fluid" src="{{ asset('storage/'. $project->image) }}" alt="{{ $project->title }}">
+        </div>
+    @endif
+
     <h6 class="text-center">
         @forelse ($project->technologies as $tech)
             <span class="badge text-bg-info">{{ $tech->name }}</span>

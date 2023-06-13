@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -33,7 +34,7 @@ class ProjectController extends Controller
         };
 
         // gesione nome visualizzato del filtro non trovato
-        if (!is_null($data['technology_id'])) {
+        if ($request->has('technology_id') && !is_null($data['technology_id'])) {
             $selected_tech = Technology::find($data['technology_id'])->name;
         } else {
             $selected_tech = [];
@@ -67,6 +68,13 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title'], '_');
+
+        // salvataggio del file
+        if ($request->hasFile('image')) {
+            $path = Storage::disk('public')->put('project_images', $request->image);
+            $data['image'] = $path;
+        };
+        
         $project = Project::create($data);
         if (array_key_exists('technology_id', $data)) {
             $project->technologies()->attach($data['technology_id']);
@@ -109,6 +117,18 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $data['slug'] = Str::slug($data['title'], '_');
+
+        // Salvataggio del file
+        if ($request->hasFile('image')) {
+            // aggiungo la condizione, nel caso il file esiste, lo cancello e lo ricarico
+            if ($project->image) {
+                Storage::delete($project->image);
+            }
+
+            $path = Storage::disk('public')->put('project_images', $request->image);
+            $data['image'] = $path;
+        }
+
         $project->update($data);
         if (array_key_exists('technology_id', $data)) {
             $project->technologies()->sync($data['technology_id']);
@@ -126,8 +146,13 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        $project->delete();
         $project->technologies()->detach();
+
+        if ($project->image) {
+            Storage::delete($project->image);
+        }
+        
+        $project->delete();
         return redirect()->route('admin.projects.index')->with('message', "$project->title è stato cancellato con successo");
     }
 }
