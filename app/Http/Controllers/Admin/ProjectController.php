@@ -18,11 +18,23 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::all();
+        $data = $request->all();
+        $technologies = Technology::all();
         $types = Type::all();
-        return view('admin.projects.index', compact('projects', 'types'));
+
+        $projects = Project::query();
+
+        if ($request->has('technology_id') && !is_null($data['technology_id'])) {
+            $projects->whereHas('technologies', function ($query) use ($data) {
+                $query->where('technology_id', $data['technology_id']);
+            });
+        };
+
+        $projects = $projects->get();
+
+        return view('admin.projects.index', compact('projects', 'types', 'technologies'));
     }
 
     /**
