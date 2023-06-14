@@ -51,7 +51,6 @@ const previewContainer = document.getElementById("preview-container")
 if (inputImage && previewImage) {
     // gestisco l'event listener al cambio dell'inputImage
     inputImage.addEventListener("change", function() {
-        console.log('immagine inserita');
         // prelevo l'immagine selezionata
         const file = this.files[0];
 
