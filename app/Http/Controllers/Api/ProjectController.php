@@ -9,10 +9,27 @@ use Illuminate\Http\Request;
 class ProjectController extends Controller
 {
     public function index() {
-        $projects = Project::with(['technologies', 'type'])->paginate(10);
+        // $projects = Project::all();
+        $projects = Project::with(['technologies', 'type'])->paginate(8);
         return response()->json([
             'success' => true,
             'results' => $projects,
         ]);
+    }
+
+    public function show($slug) {
+        $projects = Project::with(['technologies', 'type'])->where('slug', $slug)->first();
+        if ($projects) {
+            return response()->json([
+                'success' => true,
+                'results' => $projects,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Progetto non trovato',
+            ])->setStatusCode(404);
+        }
+
     }
 }
